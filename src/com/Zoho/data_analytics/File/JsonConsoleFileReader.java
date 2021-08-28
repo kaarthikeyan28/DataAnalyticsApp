@@ -47,7 +47,6 @@ public class JsonConsoleFileReader extends ConsoleFileReader {
 
         StringBuffer stringBuffer = new StringBuffer();
 
-
         for(int i=0;i<lines.size();i++){
             lines.set(i,lines.get(i).replaceAll("\\s",""));
             lines.set(i, lines.get(i).replaceAll(",",""));
@@ -84,5 +83,10 @@ public class JsonConsoleFileReader extends ConsoleFileReader {
             database.insertValues(data);
         }
         //System.out.println(getTableName()+" Inserted !");
+    }
+
+    @Override
+    public void run() {
+
     }
 }

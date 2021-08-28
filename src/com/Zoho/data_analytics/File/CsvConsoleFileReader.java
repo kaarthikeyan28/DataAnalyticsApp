@@ -19,6 +19,11 @@ public class CsvConsoleFileReader extends ConsoleFileReader {
     }
 
     @Override
+    public void run(){
+
+    }
+
+    @Override
     public void convertLines(List<String> lines) {
 
         if(lines==null) return;

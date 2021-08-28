@@ -1,7 +1,5 @@
 package com.Zoho.data_analytics.File;
 
-import com.Zoho.data_analytics.File.FileBufferReader;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ abstract public class ConsoleFileReader implements FileBufferReader {
         this.fileName = filename;
     }
 
-    synchronized public List<String> readFiles(String fileName){
+    public List<String> readFiles(String fileName){
         try{
             tableName = (fileName.split("\\.")[0]);
 

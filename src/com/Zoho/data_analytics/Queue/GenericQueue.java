@@ -3,27 +3,28 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GenericQueue<T> {
-    private int totalThreads;
-
-    public int getTotalThreads() {
-        return totalThreads;
-    }
-
-    public void setTotalThreads(int totalThreads) {
-        this.totalThreads = totalThreads;
-    }
-
-    public ArrayList<T>  arr = new ArrayList<>(totalThreads);
+    public ArrayList<T>  arr = new ArrayList<>();
 
     public T poll(){
         return arr.get(0);
     }
 
-    public int size(){
+    public T get(int index){
+        return arr.get(index);
+    }
+
+    public void deQueue(){
+        if(!arr.isEmpty()) arr.remove(arr.size()-1);
+        else{
+            System.err.println("Queue is Empty !");
+        }
+    }
+
+    public int queueSize(){
         return arr.size();
     }
 
-    public void addFiles(T obj){
+    public void enQueue(T obj){
         arr.add(obj);
     }
 

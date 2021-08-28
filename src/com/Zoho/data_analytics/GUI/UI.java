@@ -1,6 +1,10 @@
 package com.Zoho.data_analytics.GUI;
+import com.Zoho.data_analytics.Queue.DisplayQueue;
 import com.Zoho.data_analytics.Queue.GenericQueue;
-import com.Zoho.data_analytics.Threads.ThreadQueue;
+import com.Zoho.data_analytics.Threads.Import;
+import com.Zoho.data_analytics.Threads.ThreadPool;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,9 +13,14 @@ public class UI{
     private int options;
     private int poolSize;
     private String fileName;
-    private GenericQueue<Thread> genericQueue = new GenericQueue();
-    private Import importObject = new Import();
-    public ThreadQueue threadQueue = new ThreadQueue();
+    private ThreadPool threadPool ;
+    private GenericQueue<String> fileQueue;
+    public static ArrayList<Import> importArrayList;
+
+    UI(){
+        fileQueue = new GenericQueue();
+        importArrayList = new ArrayList<>();
+    }
 
     public String getFileName() {
         return fileName;
@@ -24,22 +33,17 @@ public class UI{
     public void Home(){
         Scanner sc = new Scanner(System.in);
 
-        //System.out.println("How can I call you ?");
-
         name = "Kaarthi";
-
         System.out.println("Hello "+name+" !");
-
-        System.out.println("Enter Pool Size");
+        System.out.println("Enter ThreadPool Size");
         poolSize = sc.nextInt();
-        genericQueue.setTotalThreads(poolSize);
+
+        threadPool = new ThreadPool(poolSize);
 
         try {
             do {
-//                System.out.println("Enter Pool Size :");
-//                poolSize = sc.nextInt();
                 System.out.println("Choose your Options :");
-                System.out.println("1.Import Files\n2.View Ready Queue\n3.Exit");
+                System.out.println("1.Import Files\n2.View Queue\n3.Exit");
                 options = sc.nextInt();
                 sc.nextLine();
                 if (options == 3) break;
@@ -48,16 +52,34 @@ public class UI{
                     case 1: {
                         System.out.println("Please enter your Filename ");
                         fileName = sc.nextLine();
-                        //importObject.setPoolSize(poolSize);
+
+                        String dot = ".";
+
+                        if (!(fileName.contains(dot))) {
+                            System.err.println("Extension Invalid !");
+                            break;
+                        }
+
+                        String extension = (fileName.split("\\.")[1]);
+
+                        if (!(extension.equals("csv") || extension.equals("json"))) {
+                            System.err.println("Only Csv and Json are acceptable !");
+                            break;
+                        }
+                        DisplayQueue.files.arr.add(fileName);
+
+                        Import importObject = new Import();
+                        importArrayList.add(importObject);
+                        importObject.setFiles(fileQueue);
                         importObject.setFileName(fileName);
-                        importObject.setGenericQueue(genericQueue);
-                        importObject.setThreadQueue(threadQueue);
-                        Thread t1 = new Thread(importObject);
-                        t1.start();
+                        importObject.setExtension(extension);
+
+                        threadPool.execute(importObject);
                         break;
                     }
                     case 2: {
-                        genericQueue.showFiles();
+                        fileQueue.showFiles();
+                        DisplayQueue.showFiles();
                         break;
                     }
                     default: {
@@ -72,6 +94,8 @@ public class UI{
         }
         catch (InputMismatchException inputMismatchException){
             System.err.println("Please Select Valid option !");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

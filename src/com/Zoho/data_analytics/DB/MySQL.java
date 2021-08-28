@@ -59,14 +59,6 @@ public class MySQL implements Database{
             sql = sql + questionmark;
 
         }
-//        catch (SQLSyntaxErrorException sqlerr){
-//            System.err.println("Your File already exist in Database !");
-//            return -1;
-//        }
-        catch (SQLException sqlException){
-            System.err.println("Error in Sql Create Table !");
-            return -1;
-        }
         catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -87,14 +79,6 @@ public class MySQL implements Database{
                     ptst.executeUpdate();
                 }
         }
-//        catch (SQLSyntaxErrorException sqlerr){
-//            System.err.println("Your File already exist in Database !");
-//            return;
-//        }
-//        catch (SQLException sqlException){
-//            System.err.println("Error in Inserting Values !");
-//            return;
-//        }
         catch(Exception e){
             e.printStackTrace();
            // System.err.println("Invalid Data !");
