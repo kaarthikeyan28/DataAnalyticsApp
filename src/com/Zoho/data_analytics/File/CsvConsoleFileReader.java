@@ -44,6 +44,12 @@ public class CsvConsoleFileReader extends ConsoleFileReader {
 
             database.insertValues(data);
         }
+
+        try {
+            Thread.sleep(10000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //System.out.println(getTableName()+" Inserted !");
     }
 }

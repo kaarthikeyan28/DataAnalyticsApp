@@ -5,30 +5,33 @@ import com.Zoho.data_analytics.Queue.DisplayQueue;
 
 public class PoolThreadRunnable implements Runnable {
 
-    private Thread thread    = null;
+    private Thread thread = null;
     private BlockingQueue taskQueue = null;
 
-    public PoolThreadRunnable(BlockingQueue queue){
+    public PoolThreadRunnable(BlockingQueue queue) {
         taskQueue = queue;
     }
 
-    public void run(){
+    public void run() {
         this.thread = Thread.currentThread();
-        while(true){
-            try{
-                Runnable runnable = (Runnable) taskQueue.dequeue();
-                if(DisplayQueue.map.get(runnable).equals("New")) {
-                    DisplayQueue.map.put(runnable,"Runnable");
-                    runnable.run();
-                    DisplayQueue.map.put(runnable,"Terminated");
+        while (true) {
+            try {
+                Object kl = taskQueue.dequeue();
+                if (DisplayQueue.checkPresent(kl)) {
+                    Runnable runnable = (Runnable) kl;
+                    if (DisplayQueue.map.get(runnable).equals("New")) {
+                        DisplayQueue.map.put(runnable, "Runnable");
+                        runnable.run();
+                        DisplayQueue.map.put(runnable, "Terminated");
+                    } else {
+                        //taskQueue.removeElements(runnable);
+                    }
                 }
-                else{
-                   // System.out.println(runnable.toString());
-                    taskQueue.removeElements(runnable);
-                }
-            } catch(Exception e){
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
 }

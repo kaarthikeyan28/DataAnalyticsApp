@@ -71,12 +71,18 @@ public class DisplayQueue{
         }
         else if(status.equals("New")){
            System.out.println(files.arr.get(index)+" removed Successfully !");
-
            DisplayQueue.files.arr.remove(index);
            DisplayQueue.map.remove(key);
-           //DisplayQueue.map.put(key,"Removed");
-            UI.importArrayList.remove(index);
+           UI.importArrayList.remove(index);
        }
+    }
+    public static boolean checkPresent(Object item){
+        for(Map.Entry<Runnable,String> entry:map.entrySet()){
+            if(item==entry.getKey()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

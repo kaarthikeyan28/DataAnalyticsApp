@@ -34,6 +34,13 @@ public class BlockingQueue{
         queue.remove(index);
     }
 
+    public boolean search(Object search){
+        for(int i=0; i<queue.size(); i++){
+           if(search==queue.get(i)) return true;
+        }
+        return false;
+    }
+
     public synchronized Object dequeue() throws InterruptedException{
         while(this.queue.size() == 0){
             wait();

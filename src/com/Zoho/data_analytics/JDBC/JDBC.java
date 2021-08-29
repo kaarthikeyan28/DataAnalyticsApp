@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBC {
-    final static String DB_URL = "jdbc:mysql://localhost:3306/dataanalytics?autoReconnect=true&useSSL=false";
-    final static String User = "root";
-    final static String Password = "Kaarthi@2001";
+    final static String DB_URL = "jdbc:mysql://localhost:3306/dataanalytics?autoReconnect=true&useSSL=false";  // your database
+    final static String User = "root"; //your username
+    final static String Password = "Kaarthi@2001"; //your password
     static Connection conn = null;
 
     public static Connection getConnection(){
